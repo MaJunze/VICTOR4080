@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
             panel1 = new Panel();
             panel2 = new Panel();
@@ -66,10 +67,15 @@
             label12 = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
             panel5 = new Panel();
+            button5 = new Button();
+            button4 = new Button();
+            button3 = new Button();
+            button6 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // formsPlot1
@@ -175,9 +181,9 @@
             label11.Font = new Font("Microsoft YaHei UI", 18F);
             label11.Location = new Point(80, 154);
             label11.Name = "label11";
-            label11.Size = new Size(86, 31);
+            label11.Size = new Size(100, 31);
             label11.TabIndex = 9;
-            label11.Text = "-67.89";
+            label11.Text = "-67.890";
             // 
             // label10
             // 
@@ -196,9 +202,9 @@
             label9.Font = new Font("Microsoft YaHei UI", 18F);
             label9.Location = new Point(80, 116);
             label9.Name = "label9";
-            label9.Size = new Size(76, 31);
+            label9.Size = new Size(90, 31);
             label9.TabIndex = 7;
-            label9.Text = "234.5";
+            label9.Text = "123.45";
             // 
             // label8
             // 
@@ -489,10 +495,62 @@
             // 
             panel5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel5.BorderStyle = BorderStyle.FixedSingle;
+            panel5.Controls.Add(button6);
+            panel5.Controls.Add(button5);
+            panel5.Controls.Add(button4);
+            panel5.Controls.Add(button3);
             panel5.Location = new Point(12, 557);
             panel5.Name = "panel5";
             panel5.Size = new Size(1000, 49);
             panel5.TabIndex = 5;
+            // 
+            // button5
+            // 
+            button5.BackColor = Color.White;
+            button5.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button5.Location = new Point(629, 9);
+            button5.Name = "button5";
+            button5.Size = new Size(112, 32);
+            button5.TabIndex = 6;
+            button5.TabStop = false;
+            button5.Text = "导出图表";
+            button5.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            button4.BackColor = Color.White;
+            button4.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button4.Location = new Point(431, 9);
+            button4.Name = "button4";
+            button4.Size = new Size(112, 32);
+            button4.TabIndex = 5;
+            button4.TabStop = false;
+            button4.Text = "暂停绘制";
+            button4.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            button3.BackColor = Color.White;
+            button3.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button3.Location = new Point(35, 9);
+            button3.Name = "button3";
+            button3.Size = new Size(112, 32);
+            button3.TabIndex = 4;
+            button3.TabStop = false;
+            button3.Text = "清除图表";
+            button3.UseVisualStyleBackColor = false;
+            // 
+            // button6
+            // 
+            button6.BackColor = Color.White;
+            button6.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button6.Location = new Point(233, 9);
+            button6.Name = "button6";
+            button6.Size = new Size(112, 32);
+            button6.TabIndex = 7;
+            button6.TabStop = false;
+            button6.Text = "开始绘制";
+            button6.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
@@ -504,6 +562,7 @@
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "VICTOR4080";
             panel1.ResumeLayout(false);
@@ -513,6 +572,7 @@
             panel3.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -555,5 +615,9 @@
         private ComboBox comboBox2;
         private System.Windows.Forms.Timer timer1;
         private Panel panel5;
+        private Button button4;
+        private Button button3;
+        private Button button5;
+        private Button button6;
     }
 }

@@ -1,4 +1,6 @@
 using OpenTK.Graphics.ES10;
+using ScottPlot;
+using ScottPlot.Plottables;
 using System;
 using System.Globalization;
 using System.IO.Ports;
@@ -26,6 +28,16 @@ namespace VICTOR4080
         private readonly SerialPort _serialPort = new();
         private readonly Queue<string> _rxQueue = new();
 
+        private readonly List<DateTime> _allTime = [];
+        private readonly List<double> _valA = [];
+        private readonly List<double> _valB = [];
+
+        private Plot _plt;
+        private DataLogger _loggerA;
+        private DataLogger _loggerB;
+        private System.Windows.Forms.Timer _renderTimer;
+        private const int ViewMaxPoint = 1000;
+
         private string lb2Func = "功能: ";
         private string lb2Func1 = "";
         private string lb2Func2 = "";
@@ -52,86 +64,25 @@ namespace VICTOR4080
             InitializeComponent();
 
             //Lable
-            ClearLable();
-
-            //功能
-            label2.Text = "";
-            //量程
-            label3.Text = "";
-            //速度
-            label4.Text = "";
-            //频率
-            label5.Text = "";
-            //电平
-            label6.Text = "";
-            //偏置
-            label7.Text = "";
-            //第一测量
-            label8.Text = "";
-            //第一测量结果
-            label9.Text = "";
-            //第二测量
-            label10.Text = "";
-            //第二测量结果
-            label11.Text = "";
+            InitLable();
 
             //CobomBox
-            //串口
-            comboBox1.Items.AddRange(SerialPort.GetPortNames());
-            if (comboBox1.Items.Count > 0)
+            InitComboBox();
+
+            //Timer
+            InitRenderTimer();
+
+            // 初始化绘图
+            InitChart();
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (_serialPort.IsOpen)
             {
-                comboBox1.SelectedIndex = 0;
+                SerialPort_DataSend("FETCH?");
             }
-            //第一测量
-            comboBox2.Items.Add("R");
-            comboBox2.Items.Add("C");
-            comboBox2.Items.Add("L");
-            comboBox2.Items.Add("Z");
-            comboBox2.SelectedIndex = 3;
-            //第二测量
-            comboBox3.Items.Add("X");
-            comboBox3.Items.Add("D");
-            comboBox3.Items.Add("Q");
-            comboBox3.Items.Add("θ");
-            comboBox3.Items.Add("ESR");
-            comboBox3.SelectedIndex = 3;
-            //串并联
-            comboBox4.Items.Add("Serial");
-            comboBox4.Items.Add("Pallel");
-            comboBox4.SelectedIndex = 0;
-            //量程
-            comboBox5.Items.Add("10Ω");
-            comboBox5.Items.Add("100Ω");
-            comboBox5.Items.Add("1KΩ");
-            comboBox5.Items.Add("10KΩ");
-            comboBox5.Items.Add("100KΩ");
-            comboBox5.Items.Add("1MΩ");
-            comboBox5.Items.Add("自动");
-            comboBox5.SelectedIndex = 6;
-            //速度
-            comboBox6.Items.Add("慢速");
-            comboBox6.Items.Add("中速");
-            comboBox6.Items.Add("快速");
-            comboBox6.SelectedIndex = 0;
-            //频率
-            comboBox7.Items.Add("100Hz");
-            comboBox7.Items.Add("120Hz");
-            comboBox7.Items.Add("1KHz");
-            comboBox7.Items.Add("10KHz");
-            comboBox7.Items.Add("40KHz");
-            comboBox7.Items.Add("100KHz");
-            comboBox7.SelectedIndex = 2;
-            //电平
-            comboBox8.Items.Add("300mV");
-            comboBox8.Items.Add("600mV");
-            comboBox8.Items.Add("1000mV");
-            comboBox8.SelectedIndex = 2;
-            //偏置
-            comboBox9.Items.Add("0mV");
-            comboBox9.Items.Add("100mV");
-            comboBox9.Items.Add("300mV");
-            comboBox9.Items.Add("600mV");
-            comboBox9.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -156,7 +107,7 @@ namespace VICTOR4080
                 _serialPort.Close();
                 _serialPort.DataReceived -= SerialPort_DataReceived;
                 button2.Text = "连接设备";
-                button2.BackColor = Color.White;
+                button2.BackColor = System.Drawing.Color.White;
             }
             else
             {
@@ -173,28 +124,20 @@ namespace VICTOR4080
 
                     //打开串口
                     _serialPort.Open();
-                    ClearLable();
+                    InitLable();
                     if (VICTOR4080_Connect())
                     {
                         timer1.Enabled = true;
                         button1.Enabled = false;
                         comboBox1.Enabled = false;
                         button2.Text = "关闭连接";
-                        button2.BackColor = Color.LightGreen;
+                        button2.BackColor = System.Drawing.Color.LightGreen;
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-            }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (_serialPort.IsOpen)
-            {
-                SerialPort_DataSend("FETCH?");
             }
         }
 
@@ -380,11 +323,6 @@ namespace VICTOR4080
             }
 
             return res;
-        }
-
-        private void VICTOR4080_Get()
-        {
-
         }
 
         private bool VICTOR4080_Set(VICTOR4080SetItems item, int index = 0)
@@ -582,9 +520,21 @@ namespace VICTOR4080
                 {
                     if (_rxQueue.Count > 0)
                     {
-                        if ("exec success\n" == _rxQueue.Dequeue())
+                        string rx = _rxQueue.Dequeue();
+                        
+                        if ("exec success\n" == rx)
                         {
                             res = true;
+                            break;
+                        }
+                        else if ("exec err\n" == rx)
+                        {
+                            res = false;
+                            break;
+                        }
+                        else if ("cmd err\n" == rx)
+                        {
+                            res = false;
                             break;
                         }
                     }
@@ -618,6 +568,8 @@ namespace VICTOR4080
                 string[] nums = rx.Split(',');
                 double num1 = double.Parse(nums[0]);
                 double num2 = double.Parse(nums[1]);
+
+                AddPoint(num1, num2);
 
                 this.Invoke(new Action(() =>
                 {
@@ -774,7 +726,27 @@ namespace VICTOR4080
             }
         }
 
-        private void ClearLable()
+        private void ShowSetting()
+        {
+            //功能
+            label2.Text = lb2Func + lb2Func1 + lb2Func2 + lb2Func3 + lb2Func4;
+            //量程
+            label3.Text = lb3Range + lb3Range1;
+            //速度
+            label4.Text = lb4Speed + lb4Speed1;
+            //频率
+            label5.Text = lb5Freq + lb5Freq1;
+            //电平
+            label6.Text = lb6Level + lb6Level1;
+            //偏置
+            label7.Text = lb7Bias + lb7Bias1;
+            //第一测量
+            label8.Text = lb2Func1 + lb2Func2 + ":";
+            //第二测量
+            label10.Text = lb2Func4 + ":";
+        }
+
+        private void InitLable()
         {
             //功能
             label2.Text = "";
@@ -798,24 +770,155 @@ namespace VICTOR4080
             label11.Text = "";
         }
 
-        private void ShowSetting()
+        private void InitComboBox()
         {
-            //功能
-            label2.Text = lb2Func + lb2Func1 + lb2Func2 + lb2Func3 + lb2Func4;
-            //量程
-            label3.Text = lb3Range + lb3Range1;
-            //速度
-            label4.Text = lb4Speed + lb4Speed1;
-            //频率
-            label5.Text = lb5Freq + lb5Freq1;
-            //电平
-            label6.Text = lb6Level + lb6Level1;
-            //偏置
-            label7.Text = lb7Bias + lb7Bias1;
+            //串口
+            comboBox1.Items.AddRange(SerialPort.GetPortNames());
+            if (comboBox1.Items.Count > 0)
+            {
+                comboBox1.SelectedIndex = 0;
+            }
             //第一测量
-            label8.Text = lb2Func1 + lb2Func2 + ":";
+            comboBox2.Items.Add("R");
+            comboBox2.Items.Add("C");
+            comboBox2.Items.Add("L");
+            comboBox2.Items.Add("Z");
+            comboBox2.SelectedIndex = 3;
             //第二测量
-            label10.Text = lb2Func4 + ":";
+            comboBox3.Items.Add("X");
+            comboBox3.Items.Add("D");
+            comboBox3.Items.Add("Q");
+            comboBox3.Items.Add("θ");
+            comboBox3.Items.Add("ESR");
+            comboBox3.SelectedIndex = 3;
+            //串并联
+            comboBox4.Items.Add("Serial");
+            comboBox4.Items.Add("Pallel");
+            comboBox4.SelectedIndex = 0;
+            //量程
+            comboBox5.Items.Add("10Ω");
+            comboBox5.Items.Add("100Ω");
+            comboBox5.Items.Add("1KΩ");
+            comboBox5.Items.Add("10KΩ");
+            comboBox5.Items.Add("100KΩ");
+            comboBox5.Items.Add("1MΩ");
+            comboBox5.Items.Add("自动");
+            comboBox5.SelectedIndex = 6;
+            //速度
+            comboBox6.Items.Add("慢速（2/s）");
+            comboBox6.Items.Add("中速（4/s）");
+            comboBox6.Items.Add("快速（8/s）");
+            comboBox6.SelectedIndex = 0;
+            //频率
+            comboBox7.Items.Add("100Hz");
+            comboBox7.Items.Add("120Hz");
+            comboBox7.Items.Add("1KHz");
+            comboBox7.Items.Add("10KHz");
+            comboBox7.Items.Add("40KHz");
+            comboBox7.Items.Add("100KHz");
+            comboBox7.SelectedIndex = 2;
+            //电平
+            comboBox8.Items.Add("300mV");
+            comboBox8.Items.Add("600mV");
+            comboBox8.Items.Add("1000mV");
+            comboBox8.SelectedIndex = 2;
+            //偏置
+            comboBox9.Items.Add("0mV");
+            comboBox9.Items.Add("100mV");
+            comboBox9.Items.Add("300mV");
+            comboBox9.Items.Add("600mV");
+            comboBox9.SelectedIndex = 0;
+        }
+
+        private void InitRenderTimer()
+        {
+            _renderTimer = new System.Windows.Forms.Timer();
+            _renderTimer.Interval = 20;
+            _renderTimer.Tick += RenderTimer_Tick;
+            _renderTimer.Start();
+        }
+
+        private void RenderTimer_Tick(object? sender, EventArgs e)
+        {
+            _plt.Axes.AutoScale();
+            formsPlot1.Refresh();
+        }
+
+        private void InitChart()
+        {
+            _plt = formsPlot1.Plot;
+            _plt.Clear();
+
+            // 曲线A
+            _loggerA = _plt.Add.DataLogger();
+            _loggerA.Color = Colors.Blue;
+            _loggerA.LegendText = "模拟量A";
+            _loggerA.LineWidth = 2;
+            _loggerA.MarkerStyle.IsVisible = false; // 不显示圆点，纯线条
+            _loggerA.ViewSlide(ViewMaxPoint);       // 开启滑动窗口，参数=窗口最大点数
+
+            // 曲线B
+            _loggerB = _plt.Add.DataLogger();
+            _loggerB.Color = Colors.Red;
+            _loggerB.LegendText = "模拟量B";
+            _loggerB.LineWidth = 2;
+            _loggerB.MarkerStyle.IsVisible = false;
+            _loggerB.ViewSlide(ViewMaxPoint);
+
+            // X轴时间格式化
+            _plt.Axes.DateTimeTicksBottom();
+            _plt.XLabel("采集时间");
+            _plt.YLabel("模拟量数值");
+
+            _plt.Legend.IsVisible = true;
+            _plt.Grid.IsVisible = true;
+            _plt.Font.Set("微软雅黑");
+        }
+
+        private void AddPoint(double valueA, double valueB)
+        {
+            if (formsPlot1.InvokeRequired)
+            {
+                formsPlot1.Invoke(new Action(() => AddPoint(valueA, valueB)));
+                return;
+            }
+
+            DateTime now = DateTime.Now;
+            double xOa = now.ToOADate();
+
+            // 1. 全量存入List，永久保存用于导出CSV
+            _allTime.Add(now);
+            _valA.Add(valueA);
+            _valB.Add(valueB);
+
+            // 2. 写入绘图DataLogger（自动滑动窗口）
+            _loggerA.Add(xOa, valueA);
+            _loggerB.Add(xOa, valueB);
+        }
+
+        private void btnExportCsv_Click(object sender, EventArgs e)
+        {
+            if (_allTime.Count == 0)
+            {
+                MessageBox.Show("暂无采集数据");
+                return;
+            }
+
+            using SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV文件 (*.csv)|*.csv";
+            sfd.FileName = $"采集数据_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            List<string> rows = new List<string> { "采集时间,模拟量A,模拟量B" };
+            for (int i = 0; i < _allTime.Count; i++)
+            {
+                string timeStr = _allTime[i].ToString("yyyy-MM-dd HH:mm:ss.fff");
+                rows.Add($"{timeStr},{_valA[i]},{_valB[i]}");
+            }
+
+            File.WriteAllLines(sfd.FileName, rows, System.Text.Encoding.UTF8);
+            MessageBox.Show($"导出成功，共{_allTime.Count}条记录");
         }
     }
 }
