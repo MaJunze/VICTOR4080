@@ -66,16 +66,25 @@
             label13 = new Label();
             label12 = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
-            panel5 = new Panel();
-            button5 = new Button();
-            button4 = new Button();
             button3 = new Button();
             button6 = new Button();
+            button5 = new Button();
+            button4 = new Button();
+            timer2 = new System.Windows.Forms.Timer(components);
+            button7 = new Button();
+            panel6 = new Panel();
+            panel5 = new Panel();
+            panel7 = new Panel();
+            button9 = new Button();
+            button8 = new Button();
+            panel8 = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
+            panel6.SuspendLayout();
             panel5.SuspendLayout();
+            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // formsPlot1
@@ -104,9 +113,9 @@
             panel2.Controls.Add(button1);
             panel2.Controls.Add(comboBox1);
             panel2.Controls.Add(label1);
-            panel2.Location = new Point(1018, 12);
+            panel2.Location = new Point(1017, 12);
             panel2.Name = "panel2";
-            panel2.Size = new Size(234, 87);
+            panel2.Size = new Size(235, 87);
             panel2.TabIndex = 2;
             // 
             // button2
@@ -170,28 +179,28 @@
             panel3.Controls.Add(label4);
             panel3.Controls.Add(label3);
             panel3.Controls.Add(label2);
-            panel3.Location = new Point(1018, 105);
+            panel3.Location = new Point(1017, 105);
             panel3.Name = "panel3";
-            panel3.Size = new Size(234, 198);
+            panel3.Size = new Size(235, 198);
             panel3.TabIndex = 3;
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Microsoft YaHei UI", 18F);
-            label11.Location = new Point(80, 154);
+            label11.Font = new Font("Microsoft YaHei UI", 15.75F);
+            label11.Location = new Point(62, 154);
             label11.Name = "label11";
-            label11.Size = new Size(100, 31);
+            label11.Size = new Size(86, 28);
             label11.TabIndex = 9;
             label11.Text = "-67.890";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Microsoft YaHei UI", 18F);
+            label10.Font = new Font("Microsoft YaHei UI", 15.75F);
             label10.Location = new Point(10, 154);
             label10.Name = "label10";
-            label10.Size = new Size(42, 31);
+            label10.Size = new Size(36, 28);
             label10.TabIndex = 8;
             label10.Text = "θ: ";
             label10.TextAlign = ContentAlignment.MiddleCenter;
@@ -199,20 +208,20 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Microsoft YaHei UI", 18F);
-            label9.Location = new Point(80, 116);
+            label9.Font = new Font("Microsoft YaHei UI", 15.75F);
+            label9.Location = new Point(62, 116);
             label9.Name = "label9";
-            label9.Size = new Size(90, 31);
+            label9.Size = new Size(77, 28);
             label9.TabIndex = 7;
             label9.Text = "123.45";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Microsoft YaHei UI", 18F);
+            label8.Font = new Font("Microsoft YaHei UI", 15.75F);
             label8.Location = new Point(10, 116);
             label8.Name = "label8";
-            label8.Size = new Size(53, 31);
+            label8.Size = new Size(46, 28);
             label8.TabIndex = 6;
             label8.Text = "Zs: ";
             label8.TextAlign = ContentAlignment.MiddleCenter;
@@ -297,9 +306,9 @@
             panel4.Controls.Add(label14);
             panel4.Controls.Add(label13);
             panel4.Controls.Add(label12);
-            panel4.Location = new Point(1018, 309);
+            panel4.Location = new Point(1017, 309);
             panel4.Name = "panel4";
-            panel4.Size = new Size(234, 297);
+            panel4.Size = new Size(235, 299);
             panel4.TabIndex = 4;
             // 
             // comboBox9
@@ -450,7 +459,7 @@
             label15.Name = "label15";
             label15.Size = new Size(99, 25);
             label15.TabIndex = 4;
-            label15.Text = "测量量程: ";
+            label15.Text = "量程选择: ";
             label15.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label14
@@ -491,72 +500,153 @@
             timer1.Interval = 500;
             timer1.Tick += timer1_Tick;
             // 
-            // panel5
-            // 
-            panel5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel5.BorderStyle = BorderStyle.FixedSingle;
-            panel5.Controls.Add(button6);
-            panel5.Controls.Add(button5);
-            panel5.Controls.Add(button4);
-            panel5.Controls.Add(button3);
-            panel5.Location = new Point(12, 557);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(1000, 49);
-            panel5.TabIndex = 5;
-            // 
-            // button5
-            // 
-            button5.BackColor = Color.White;
-            button5.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button5.Location = new Point(629, 9);
-            button5.Name = "button5";
-            button5.Size = new Size(112, 32);
-            button5.TabIndex = 6;
-            button5.TabStop = false;
-            button5.Text = "导出图表";
-            button5.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            button4.BackColor = Color.White;
-            button4.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button4.Location = new Point(431, 9);
-            button4.Name = "button4";
-            button4.Size = new Size(112, 32);
-            button4.TabIndex = 5;
-            button4.TabStop = false;
-            button4.Text = "暂停绘制";
-            button4.UseVisualStyleBackColor = false;
-            // 
             // button3
             // 
             button3.BackColor = Color.White;
             button3.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button3.Location = new Point(35, 9);
+            button3.Location = new Point(3, 9);
             button3.Name = "button3";
-            button3.Size = new Size(112, 32);
+            button3.Size = new Size(96, 32);
             button3.TabIndex = 4;
             button3.TabStop = false;
             button3.Text = "清除图表";
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // button6
             // 
             button6.BackColor = Color.White;
             button6.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button6.Location = new Point(233, 9);
+            button6.Location = new Point(207, 9);
             button6.Name = "button6";
-            button6.Size = new Size(112, 32);
+            button6.Size = new Size(96, 32);
             button6.TabIndex = 7;
             button6.TabStop = false;
-            button6.Text = "开始绘制";
+            button6.Text = "滚动刷新";
             button6.UseVisualStyleBackColor = false;
+            button6.Click += button6_Click;
+            // 
+            // button5
+            // 
+            button5.BackColor = Color.White;
+            button5.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button5.Location = new Point(105, 9);
+            button5.Name = "button5";
+            button5.Size = new Size(96, 32);
+            button5.TabIndex = 6;
+            button5.TabStop = false;
+            button5.Text = "单屏刷新";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
+            // 
+            // button4
+            // 
+            button4.BackColor = Color.DarkSeaGreen;
+            button4.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button4.Location = new Point(3, 9);
+            button4.Name = "button4";
+            button4.Size = new Size(96, 32);
+            button4.TabIndex = 5;
+            button4.TabStop = false;
+            button4.Text = "全部波形";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
+            // 
+            // timer2
+            // 
+            timer2.Interval = 50;
+            timer2.Tick += timer2_Tick;
+            // 
+            // button7
+            // 
+            button7.BackColor = Color.White;
+            button7.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button7.Location = new Point(309, 9);
+            button7.Name = "button7";
+            button7.Size = new Size(96, 32);
+            button7.TabIndex = 5;
+            button7.TabStop = false;
+            button7.Text = "暂停刷新";
+            button7.UseVisualStyleBackColor = false;
+            button7.Click += button7_Click;
+            // 
+            // panel6
+            // 
+            panel6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel6.BorderStyle = BorderStyle.FixedSingle;
+            panel6.Controls.Add(button6);
+            panel6.Controls.Add(button7);
+            panel6.Controls.Add(button4);
+            panel6.Controls.Add(button5);
+            panel6.Location = new Point(123, 558);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(411, 50);
+            panel6.TabIndex = 8;
+            // 
+            // panel5
+            // 
+            panel5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel5.BorderStyle = BorderStyle.FixedSingle;
+            panel5.Controls.Add(button3);
+            panel5.Location = new Point(12, 558);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(105, 50);
+            panel5.TabIndex = 5;
+            // 
+            // panel7
+            // 
+            panel7.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel7.BorderStyle = BorderStyle.FixedSingle;
+            panel7.Controls.Add(button9);
+            panel7.Controls.Add(button8);
+            panel7.Location = new Point(540, 558);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(206, 50);
+            panel7.TabIndex = 9;
+            // 
+            // button9
+            // 
+            button9.BackColor = Color.White;
+            button9.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button9.Location = new Point(105, 9);
+            button9.Name = "button9";
+            button9.Size = new Size(96, 32);
+            button9.TabIndex = 7;
+            button9.TabStop = false;
+            button9.Text = "我存哪了";
+            button9.UseVisualStyleBackColor = false;
+            button9.Click += button9_Click;
+            // 
+            // button8
+            // 
+            button8.BackColor = Color.White;
+            button8.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button8.Location = new Point(3, 9);
+            button8.Name = "button8";
+            button8.Size = new Size(96, 32);
+            button8.TabIndex = 6;
+            button8.TabStop = false;
+            button8.Text = "导出数据";
+            button8.UseVisualStyleBackColor = false;
+            button8.Click += button8_Click;
+            // 
+            // panel8
+            // 
+            panel8.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel8.BorderStyle = BorderStyle.FixedSingle;
+            panel8.Location = new Point(752, 558);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(260, 50);
+            panel8.TabIndex = 10;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1264, 619);
+            Controls.Add(panel8);
+            Controls.Add(panel7);
+            Controls.Add(panel6);
             Controls.Add(panel5);
             Controls.Add(panel4);
             Controls.Add(panel3);
@@ -565,6 +655,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "VICTOR4080";
+            FormClosing += Form1_FormClosing;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
@@ -572,7 +663,9 @@
             panel3.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            panel6.ResumeLayout(false);
             panel5.ResumeLayout(false);
+            panel7.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -614,10 +707,17 @@
         private ComboBox comboBox3;
         private ComboBox comboBox2;
         private System.Windows.Forms.Timer timer1;
-        private Panel panel5;
         private Button button4;
         private Button button3;
         private Button button5;
+        private System.Windows.Forms.Timer timer2;
         private Button button6;
+        private Button button7;
+        private Panel panel6;
+        private Panel panel5;
+        private Panel panel7;
+        private Button button9;
+        private Button button8;
+        private Panel panel8;
     }
 }

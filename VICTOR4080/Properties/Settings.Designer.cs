@@ -22,5 +22,149 @@ namespace VICTOR4080.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int ComboBox2 {
+            get {
+                return ((int)(this["ComboBox2"]));
+            }
+            set {
+                this["ComboBox2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int ComboBox3 {
+            get {
+                return ((int)(this["ComboBox3"]));
+            }
+            set {
+                this["ComboBox3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ComboBox4 {
+            get {
+                return ((int)(this["ComboBox4"]));
+            }
+            set {
+                this["ComboBox4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int ComboBox5 {
+            get {
+                return ((int)(this["ComboBox5"]));
+            }
+            set {
+                this["ComboBox5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int ComboBox6 {
+            get {
+                return ((int)(this["ComboBox6"]));
+            }
+            set {
+                this["ComboBox6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int ComboBox7 {
+            get {
+                return ((int)(this["ComboBox7"]));
+            }
+            set {
+                this["ComboBox7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int ComboBox8 {
+            get {
+                return ((int)(this["ComboBox8"]));
+            }
+            set {
+                this["ComboBox8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ComboBox9 {
+            get {
+                return ((int)(this["ComboBox9"]));
+            }
+            set {
+                this["ComboBox9"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int ViewMax {
+            get {
+                return ((int)(this["ViewMax"]));
+            }
+            set {
+                this["ViewMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int SpeedSlow {
+            get {
+                return ((int)(this["SpeedSlow"]));
+            }
+            set {
+                this["SpeedSlow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
+        public int SpeedMedium {
+            get {
+                return ((int)(this["SpeedMedium"]));
+            }
+            set {
+                this["SpeedMedium"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int SpeedFast {
+            get {
+                return ((int)(this["SpeedFast"]));
+            }
+            set {
+                this["SpeedFast"] = value;
+            }
+        }
     }
 }
