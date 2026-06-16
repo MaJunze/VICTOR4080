@@ -76,7 +76,7 @@ namespace VICTOR4080
 
             ViewMax = Properties.Settings.Default.ViewMax;
 
-            this.Text = "VICTOR4080" + " - " + "V2026.0613.17.20";
+            this.Text = "VICTOR4080" + " - " + "V2026.0616.16.22";
 
             // Stopwatch
             //_sampleTimer = new HighPrecisionTimer(100)

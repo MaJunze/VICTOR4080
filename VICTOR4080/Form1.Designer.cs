@@ -77,7 +77,6 @@
             panel7 = new Panel();
             button9 = new Button();
             button8 = new Button();
-            panel8 = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -92,7 +91,7 @@
             formsPlot1.Dock = DockStyle.Fill;
             formsPlot1.Location = new Point(0, 0);
             formsPlot1.Name = "formsPlot1";
-            formsPlot1.Size = new Size(998, 538);
+            formsPlot1.Size = new Size(678, 480);
             formsPlot1.TabIndex = 0;
             // 
             // panel1
@@ -102,7 +101,7 @@
             panel1.Controls.Add(formsPlot1);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1000, 540);
+            panel1.Size = new Size(680, 482);
             panel1.TabIndex = 1;
             // 
             // panel2
@@ -113,7 +112,7 @@
             panel2.Controls.Add(button1);
             panel2.Controls.Add(comboBox1);
             panel2.Controls.Add(label1);
-            panel2.Location = new Point(1017, 12);
+            panel2.Location = new Point(697, 12);
             panel2.Name = "panel2";
             panel2.Size = new Size(235, 87);
             panel2.TabIndex = 2;
@@ -179,16 +178,16 @@
             panel3.Controls.Add(label4);
             panel3.Controls.Add(label3);
             panel3.Controls.Add(label2);
-            panel3.Location = new Point(1017, 105);
+            panel3.Location = new Point(697, 105);
             panel3.Name = "panel3";
-            panel3.Size = new Size(235, 198);
+            panel3.Size = new Size(235, 145);
             panel3.TabIndex = 3;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Microsoft YaHei UI", 15.75F);
-            label11.Location = new Point(62, 154);
+            label11.Location = new Point(62, 113);
             label11.Name = "label11";
             label11.Size = new Size(86, 28);
             label11.TabIndex = 9;
@@ -198,7 +197,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Microsoft YaHei UI", 15.75F);
-            label10.Location = new Point(10, 154);
+            label10.Location = new Point(10, 113);
             label10.Name = "label10";
             label10.Size = new Size(36, 28);
             label10.TabIndex = 8;
@@ -209,7 +208,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Microsoft YaHei UI", 15.75F);
-            label9.Location = new Point(62, 116);
+            label9.Location = new Point(62, 80);
             label9.Name = "label9";
             label9.Size = new Size(77, 28);
             label9.TabIndex = 7;
@@ -219,7 +218,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Microsoft YaHei UI", 15.75F);
-            label8.Location = new Point(10, 116);
+            label8.Location = new Point(10, 80);
             label8.Name = "label8";
             label8.Size = new Size(46, 28);
             label8.TabIndex = 6;
@@ -230,7 +229,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Microsoft YaHei UI", 12F);
-            label7.Location = new Point(117, 79);
+            label7.Location = new Point(117, 54);
             label7.Name = "label7";
             label7.Size = new Size(86, 21);
             label7.TabIndex = 5;
@@ -240,7 +239,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Microsoft YaHei UI", 12F);
-            label6.Location = new Point(117, 44);
+            label6.Location = new Point(117, 28);
             label6.Name = "label6";
             label6.Size = new Size(113, 21);
             label6.TabIndex = 4;
@@ -250,7 +249,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Microsoft YaHei UI", 12F);
-            label5.Location = new Point(117, 9);
+            label5.Location = new Point(117, 2);
             label5.Name = "label5";
             label5.Size = new Size(108, 21);
             label5.TabIndex = 3;
@@ -260,7 +259,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Microsoft YaHei UI", 12F);
-            label4.Location = new Point(3, 79);
+            label4.Location = new Point(2, 54);
             label4.Name = "label4";
             label4.Size = new Size(83, 21);
             label4.TabIndex = 2;
@@ -270,7 +269,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft YaHei UI", 12F);
-            label3.Location = new Point(3, 44);
+            label3.Location = new Point(2, 28);
             label3.Name = "label3";
             label3.Size = new Size(83, 21);
             label3.TabIndex = 1;
@@ -280,7 +279,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft YaHei UI", 12F);
-            label2.Location = new Point(3, 9);
+            label2.Location = new Point(2, 2);
             label2.Name = "label2";
             label2.Size = new Size(85, 21);
             label2.TabIndex = 0;
@@ -306,9 +305,9 @@
             panel4.Controls.Add(label14);
             panel4.Controls.Add(label13);
             panel4.Controls.Add(label12);
-            panel4.Location = new Point(1017, 309);
+            panel4.Location = new Point(697, 256);
             panel4.Name = "panel4";
-            panel4.Size = new Size(235, 299);
+            panel4.Size = new Size(235, 293);
             panel4.TabIndex = 4;
             // 
             // comboBox9
@@ -316,7 +315,7 @@
             comboBox9.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox9.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox9.FormattingEnabled = true;
-            comboBox9.Location = new Point(115, 260);
+            comboBox9.Location = new Point(114, 254);
             comboBox9.Name = "comboBox9";
             comboBox9.Size = new Size(112, 29);
             comboBox9.TabIndex = 16;
@@ -328,7 +327,7 @@
             comboBox8.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox8.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox8.FormattingEnabled = true;
-            comboBox8.Location = new Point(115, 225);
+            comboBox8.Location = new Point(114, 219);
             comboBox8.Name = "comboBox8";
             comboBox8.Size = new Size(112, 29);
             comboBox8.TabIndex = 15;
@@ -340,7 +339,7 @@
             comboBox7.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox7.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox7.FormattingEnabled = true;
-            comboBox7.Location = new Point(115, 190);
+            comboBox7.Location = new Point(114, 184);
             comboBox7.Name = "comboBox7";
             comboBox7.Size = new Size(112, 29);
             comboBox7.TabIndex = 14;
@@ -352,7 +351,7 @@
             comboBox6.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox6.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox6.FormattingEnabled = true;
-            comboBox6.Location = new Point(115, 155);
+            comboBox6.Location = new Point(114, 149);
             comboBox6.Name = "comboBox6";
             comboBox6.Size = new Size(112, 29);
             comboBox6.TabIndex = 13;
@@ -364,7 +363,7 @@
             comboBox5.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox5.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox5.FormattingEnabled = true;
-            comboBox5.Location = new Point(115, 120);
+            comboBox5.Location = new Point(114, 114);
             comboBox5.Name = "comboBox5";
             comboBox5.Size = new Size(112, 29);
             comboBox5.TabIndex = 12;
@@ -376,7 +375,7 @@
             comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox4.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox4.FormattingEnabled = true;
-            comboBox4.Location = new Point(115, 85);
+            comboBox4.Location = new Point(114, 79);
             comboBox4.Name = "comboBox4";
             comboBox4.Size = new Size(112, 29);
             comboBox4.TabIndex = 11;
@@ -388,7 +387,7 @@
             comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox3.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(115, 50);
+            comboBox3.Location = new Point(114, 44);
             comboBox3.Name = "comboBox3";
             comboBox3.Size = new Size(112, 29);
             comboBox3.TabIndex = 10;
@@ -400,7 +399,7 @@
             comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox2.Font = new Font("Microsoft YaHei UI", 12F);
             comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(115, 15);
+            comboBox2.Location = new Point(114, 9);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(112, 29);
             comboBox2.TabIndex = 9;
@@ -411,7 +410,7 @@
             // 
             label19.AutoSize = true;
             label19.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label19.Location = new Point(10, 260);
+            label19.Location = new Point(9, 256);
             label19.Name = "label19";
             label19.Size = new Size(99, 25);
             label19.TabIndex = 8;
@@ -422,7 +421,7 @@
             // 
             label18.AutoSize = true;
             label18.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label18.Location = new Point(10, 225);
+            label18.Location = new Point(9, 221);
             label18.Name = "label18";
             label18.Size = new Size(99, 25);
             label18.TabIndex = 7;
@@ -433,7 +432,7 @@
             // 
             label17.AutoSize = true;
             label17.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label17.Location = new Point(10, 190);
+            label17.Location = new Point(9, 186);
             label17.Name = "label17";
             label17.Size = new Size(99, 25);
             label17.TabIndex = 6;
@@ -444,7 +443,7 @@
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label16.Location = new Point(10, 155);
+            label16.Location = new Point(9, 151);
             label16.Name = "label16";
             label16.Size = new Size(99, 25);
             label16.TabIndex = 5;
@@ -455,7 +454,7 @@
             // 
             label15.AutoSize = true;
             label15.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label15.Location = new Point(10, 120);
+            label15.Location = new Point(9, 116);
             label15.Name = "label15";
             label15.Size = new Size(99, 25);
             label15.TabIndex = 4;
@@ -466,7 +465,7 @@
             // 
             label14.AutoSize = true;
             label14.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label14.Location = new Point(10, 85);
+            label14.Location = new Point(9, 81);
             label14.Name = "label14";
             label14.Size = new Size(99, 25);
             label14.TabIndex = 3;
@@ -477,7 +476,7 @@
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label13.Location = new Point(10, 50);
+            label13.Location = new Point(9, 46);
             label13.Name = "label13";
             label13.Size = new Size(99, 25);
             label13.TabIndex = 2;
@@ -488,7 +487,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            label12.Location = new Point(10, 15);
+            label12.Location = new Point(9, 11);
             label12.Name = "label12";
             label12.Size = new Size(99, 25);
             label12.TabIndex = 1;
@@ -504,9 +503,9 @@
             // 
             button3.BackColor = Color.White;
             button3.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button3.Location = new Point(3, 9);
+            button3.Location = new Point(3, 8);
             button3.Name = "button3";
-            button3.Size = new Size(96, 32);
+            button3.Size = new Size(88, 32);
             button3.TabIndex = 4;
             button3.TabStop = false;
             button3.Text = "清除图表";
@@ -517,9 +516,9 @@
             // 
             button6.BackColor = Color.White;
             button6.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button6.Location = new Point(207, 9);
+            button6.Location = new Point(191, 8);
             button6.Name = "button6";
-            button6.Size = new Size(96, 32);
+            button6.Size = new Size(88, 32);
             button6.TabIndex = 7;
             button6.TabStop = false;
             button6.Text = "滚动刷新";
@@ -530,9 +529,9 @@
             // 
             button5.BackColor = Color.White;
             button5.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button5.Location = new Point(105, 9);
+            button5.Location = new Point(97, 8);
             button5.Name = "button5";
-            button5.Size = new Size(96, 32);
+            button5.Size = new Size(88, 32);
             button5.TabIndex = 6;
             button5.TabStop = false;
             button5.Text = "单屏刷新";
@@ -543,9 +542,9 @@
             // 
             button4.BackColor = Color.DarkSeaGreen;
             button4.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button4.Location = new Point(3, 9);
+            button4.Location = new Point(3, 8);
             button4.Name = "button4";
-            button4.Size = new Size(96, 32);
+            button4.Size = new Size(88, 32);
             button4.TabIndex = 5;
             button4.TabStop = false;
             button4.Text = "全部波形";
@@ -561,9 +560,9 @@
             // 
             button7.BackColor = Color.White;
             button7.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button7.Location = new Point(309, 9);
+            button7.Location = new Point(285, 8);
             button7.Name = "button7";
-            button7.Size = new Size(96, 32);
+            button7.Size = new Size(88, 32);
             button7.TabIndex = 5;
             button7.TabStop = false;
             button7.Text = "暂停刷新";
@@ -578,9 +577,9 @@
             panel6.Controls.Add(button7);
             panel6.Controls.Add(button4);
             panel6.Controls.Add(button5);
-            panel6.Location = new Point(123, 558);
+            panel6.Location = new Point(115, 500);
             panel6.Name = "panel6";
-            panel6.Size = new Size(411, 50);
+            panel6.Size = new Size(380, 49);
             panel6.TabIndex = 8;
             // 
             // panel5
@@ -588,9 +587,9 @@
             panel5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             panel5.BorderStyle = BorderStyle.FixedSingle;
             panel5.Controls.Add(button3);
-            panel5.Location = new Point(12, 558);
+            panel5.Location = new Point(12, 500);
             panel5.Name = "panel5";
-            panel5.Size = new Size(105, 50);
+            panel5.Size = new Size(97, 49);
             panel5.TabIndex = 5;
             // 
             // panel7
@@ -599,18 +598,18 @@
             panel7.BorderStyle = BorderStyle.FixedSingle;
             panel7.Controls.Add(button9);
             panel7.Controls.Add(button8);
-            panel7.Location = new Point(540, 558);
+            panel7.Location = new Point(501, 500);
             panel7.Name = "panel7";
-            panel7.Size = new Size(206, 50);
+            panel7.Size = new Size(191, 49);
             panel7.TabIndex = 9;
             // 
             // button9
             // 
             button9.BackColor = Color.White;
             button9.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button9.Location = new Point(105, 9);
+            button9.Location = new Point(97, 8);
             button9.Name = "button9";
-            button9.Size = new Size(96, 32);
+            button9.Size = new Size(88, 32);
             button9.TabIndex = 7;
             button9.TabStop = false;
             button9.Text = "我存哪了";
@@ -621,30 +620,20 @@
             // 
             button8.BackColor = Color.White;
             button8.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button8.Location = new Point(3, 9);
+            button8.Location = new Point(3, 8);
             button8.Name = "button8";
-            button8.Size = new Size(96, 32);
+            button8.Size = new Size(88, 32);
             button8.TabIndex = 6;
             button8.TabStop = false;
             button8.Text = "导出数据";
             button8.UseVisualStyleBackColor = false;
             button8.Click += button8_Click;
             // 
-            // panel8
-            // 
-            panel8.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel8.BorderStyle = BorderStyle.FixedSingle;
-            panel8.Location = new Point(752, 558);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(260, 50);
-            panel8.TabIndex = 10;
-            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1264, 619);
-            Controls.Add(panel8);
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(944, 561);
             Controls.Add(panel7);
             Controls.Add(panel6);
             Controls.Add(panel5);
@@ -718,6 +707,5 @@
         private Panel panel7;
         private Button button9;
         private Button button8;
-        private Panel panel8;
     }
 }
