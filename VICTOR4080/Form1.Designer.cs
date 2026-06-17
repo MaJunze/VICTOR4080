@@ -645,6 +645,7 @@
             Name = "Form1";
             Text = "VICTOR4080";
             FormClosing += Form1_FormClosing;
+            Load += Form1_Load;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();

@@ -1,11 +1,7 @@
-using OpenTK.Graphics.ES10;
 using ScottPlot;
 using ScottPlot.Plottables;
-using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO.Ports;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace VICTOR4080
@@ -29,16 +25,19 @@ namespace VICTOR4080
         private readonly SerialPort _serialPort = new();
         private readonly Queue<string> _rxQueue = new();
 
-        private readonly List<DateTime> _timeStamp = [];
-        private readonly List<double> _timeSpan = [];
+        private readonly List<DateTime> _sendTimeStamp = [];
+        private readonly List<DateTime> _recvTimeStamp = [];
+        private readonly List<double> _sendTimeSpan = [];
+        private readonly List<double> _recvTimeSpan = [];
         private readonly List<double> _num1 = [];
         private readonly List<double> _num2 = [];
 
         private DataLogger _line1 = new();
-        private int ViewMax = 10;
+        private readonly int ViewMax = 10;
         private string _savePath = "";
 
-        private readonly HighPrecisionTimer _sampleTimer;
+        private readonly HighPrecisionTimer _highTimer;
+        private DateTime _sendTime;
 
         private string lb2Func = "功能: ";
         private string lb2Func1 = "";
@@ -76,28 +75,23 @@ namespace VICTOR4080
 
             ViewMax = Properties.Settings.Default.ViewMax;
 
-            this.Text = "VICTOR4080" + " - " + "V2026.0616.16.22";
+            _highTimer = new HighPrecisionTimer(100, TimerTickCallback);
 
-            // Stopwatch
-            //_sampleTimer = new HighPrecisionTimer(100)
-            //{
-            //    OnTick = TimerTickCallback
-            //};
-
+            Text = "VICTOR4080" + " - " + "V2026.0618.11.52";
         }
 
-        private void TimerTickCallback(DateTime nowTime)
+        private void TimerTickCallback()
         {
-            try
+            if (InvokeRequired)
             {
-                if (_serialPort.IsOpen)
-                {
-                    SerialPort_DataSend("FETCH?");
-                }
+                BeginInvoke(new Action(TimerTickCallback));
+                return;
             }
-            catch (Exception ex)
+
+            if (_serialPort.IsOpen)
             {
-                Console.WriteLine($"定时发送异常：{ex.Message}");
+                SerialPort_DataSend("FETCH?");
+                _sendTime = DateTime.Now;
             }
         }
 
@@ -106,6 +100,7 @@ namespace VICTOR4080
             if (_serialPort.IsOpen)
             {
                 SerialPort_DataSend("FETCH?");
+                _sendTime = DateTime.Now;
             }
         }
 
@@ -124,8 +119,8 @@ namespace VICTOR4080
             if (_serialPort.IsOpen)
             {
                 //关闭串口
-                //_sampleTimer.Stop();
-                timer1.Enabled = false;
+                //timer1.Enabled = false;
+                _highTimer.Stop();
                 timer2.Enabled = false;
                 label1.Enabled = true;
                 comboBox1.Enabled = true;
@@ -155,8 +150,8 @@ namespace VICTOR4080
                     if (VICTOR4080_Connect())
                     {
                         ClearData();
-                        //_sampleTimer.Start();
-                        timer1.Enabled = true;
+                        //timer1.Enabled = true;
+                        _highTimer.Start();
                         timer2.Enabled = true;
                         label1.Enabled = false;
                         comboBox1.Enabled = false;
@@ -177,16 +172,12 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.Func1, comboBox2.SelectedIndex))
                 {
                     lb2Func1 = comboBox2.Text;
 
                     ShowSetting();
                 }
-
-                timer1.Enabled = true;
             }
         }
 
@@ -194,16 +185,12 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.Func2, comboBox3.SelectedIndex))
                 {
                     lb2Func4 = comboBox3.Text;
 
                     ShowSetting();
                 }
-
-                timer1.Enabled = true;
             }
         }
 
@@ -211,8 +198,6 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.SerPal, comboBox4.SelectedIndex))
                 {
                     if (comboBox4.SelectedIndex == 0)
@@ -228,8 +213,6 @@ namespace VICTOR4080
                 }
 
                 ShowSetting();
-
-                timer1.Enabled = true;
             }
         }
 
@@ -237,16 +220,12 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.Range, comboBox5.SelectedIndex))
                 {
                     lb3Range1 = comboBox5.Text;
 
                     ShowSetting();
                 }
-
-                timer1.Enabled = true;
             }
         }
 
@@ -254,30 +233,29 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.Speed, comboBox6.SelectedIndex))
                 {
                     if (comboBox6.SelectedIndex == 0)
                     {
                         lb4Speed1 = "慢速";
                         timer1.Interval = Properties.Settings.Default.SpeedSlow;
+                        _highTimer.SetInterval(Properties.Settings.Default.SpeedSlow);
                     }
                     else if (comboBox6.SelectedIndex == 1)
                     {
                         lb4Speed1 = "中速";
                         timer1.Interval = Properties.Settings.Default.SpeedMedium;
+                        _highTimer.SetInterval(Properties.Settings.Default.SpeedMedium);
                     }
                     else if (comboBox6.SelectedIndex == 2)
                     {
                         lb4Speed1 = "快速";
                         timer1.Interval = Properties.Settings.Default.SpeedFast;
+                        _highTimer.SetInterval(Properties.Settings.Default.SpeedFast);
                     }
 
                     ShowSetting();
                 }
-
-                timer1.Enabled = true;
             }
         }
 
@@ -285,16 +263,12 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.Freq, comboBox7.SelectedIndex))
                 {
                     lb5Freq1 = comboBox7.Text;
 
                     ShowSetting();
                 }
-
-                timer1.Enabled = true;
             }
         }
 
@@ -302,16 +276,12 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.Level, comboBox8.SelectedIndex))
                 {
                     lb6Level1 = comboBox8.Text;
 
                     ShowSetting();
                 }
-
-                timer1.Enabled = true;
             }
         }
 
@@ -319,16 +289,12 @@ namespace VICTOR4080
         {
             if (_serialPort.IsOpen)
             {
-                timer1.Enabled = false;
-
                 if (VICTOR4080_Set(VICTOR4080SetItems.Bias, comboBox9.SelectedIndex))
                 {
                     lb7Bias1 = comboBox9.Text;
 
                     ShowSetting();
                 }
-
-                timer1.Enabled = true;
             }
         }
 
@@ -586,7 +552,7 @@ namespace VICTOR4080
             SerialPort_DataSend("SYSTEM:LOCAL");
         }
 
-        private void SerialPort_DataSend(String tx)
+        private void SerialPort_DataSend(string tx)
         {
             _serialPort.WriteLine(tx); Console.WriteLine(tx);
         }
@@ -609,9 +575,9 @@ namespace VICTOR4080
                     double num1 = double.Parse(nums[0]);
                     double num2 = double.Parse(nums[1]);
 
-                    AddPoint(DateTime.Now, num1, num2);
+                    AddPoint(_sendTime, DateTime.Now, num1, num2);
 
-                    this.Invoke(new Action(() =>
+                    Invoke(new Action(() =>
                     {
                         int decimalPlaces = 4;
 
@@ -904,20 +870,25 @@ namespace VICTOR4080
             _line1.ViewFull();
         }
 
-        private void AddPoint(DateTime dt, double num1, double num2)
+        private void AddPoint(DateTime send, DateTime recv, double num1, double num2)
         {
-            _timeStamp.Add(dt);
-            double span = (dt - _timeStamp[0]).TotalSeconds;
-            _timeSpan.Add(span);
+            _sendTimeStamp.Add(send);
+            _recvTimeStamp.Add(recv);
+            double sendspan = (send - _sendTimeStamp[0]).TotalSeconds;
+            _sendTimeSpan.Add(sendspan);
+            double recvspan = (recv - _recvTimeStamp[0]).TotalSeconds;
+            _recvTimeSpan.Add(recvspan);
             _num1.Add(num1);
             _num2.Add(num2);
-            _line1.Add(span, num1);
+            _line1.Add(recvspan, num1);
         }
 
         private void ClearData()
         {
-            _timeStamp.Clear();
-            _timeSpan.Clear();
+            _sendTimeStamp.Clear();
+            _recvTimeStamp.Clear();
+            _sendTimeSpan.Clear();
+            _recvTimeSpan.Clear();
             _num1.Clear();
             _num2.Clear();
             _line1.Data.Clear();
@@ -993,7 +964,7 @@ namespace VICTOR4080
 
         private void button8_Click(object sender, EventArgs e)
         {
-            int count = _timeStamp.Count;
+            int count = _recvTimeStamp.Count;
 
             if (0 == count)
             {
@@ -1014,8 +985,10 @@ namespace VICTOR4080
             _savePath = sfd.FileName;
             using StreamWriter sw = new(sfd.FileName, false, System.Text.Encoding.UTF8);
 
-            sw.WriteLine($"采集开始时间,{_timeStamp[0]:yyyy.MM.dd HH:mm:ss.fff}");
-            sw.WriteLine($"采集结束时间,{_timeStamp[count - 1]:yyyy.MM.dd HH:mm:ss.fff}");
+            sw.WriteLine($"版本,{Text}");
+            sw.WriteLine();
+            sw.WriteLine($"采集开始时间,{_recvTimeStamp[0]:yyyy.MM.dd HH:mm:ss.fff}");
+            sw.WriteLine($"采集结束时间,{_recvTimeStamp[count - 1]:yyyy.MM.dd HH:mm:ss.fff}");
             sw.WriteLine($"总记录条数,{count}");
             sw.WriteLine();
             sw.WriteLine($"串口号,{_serialPort.PortName}");
@@ -1028,17 +1001,20 @@ namespace VICTOR4080
             sw.WriteLine($"激励电平,{label6.Text}");
             sw.WriteLine($"电压偏置,{label7.Text}");
             sw.WriteLine();
-            sw.WriteLine("序号,日期,时间,相对时间,第一测量,第二测量");
+            sw.WriteLine("序号,发送日期,发送时间,发送相对,接收日期,接收时间,接收相对,第一测量" + lb2Func1 + lb2Func2 + ",第二测量" + lb2Func4);
             for (int i = 0; i < count; i++)
             {
                 string index = (i + 1).ToString();
-                string date = _timeStamp[i].ToString("yyyy.MM.dd");
-                string time = _timeStamp[i].ToString("HH:mm:ss.fff");
-                string span = _timeSpan[i].ToString("F3");
+                string senddate = _sendTimeStamp[i].ToString("yyyy.MM.dd");
+                string sendtime = _sendTimeStamp[i].ToString("HH:mm:ss.fff");
+                string sendspan = _sendTimeSpan[i].ToString("F3");
+                string recvdate = _recvTimeStamp[i].ToString("yyyy.MM.dd");
+                string recvtime = _recvTimeStamp[i].ToString("HH:mm:ss.fff");
+                string recvspan = _recvTimeSpan[i].ToString("F3");
                 string num1 = _num1[i].ToString("F3");
                 string num2 = _num2[i].ToString("F3");
 
-                sw.WriteLine($"{index},{date},{time},{span},{num1},{num2}");
+                sw.WriteLine($"{index},{senddate},{sendtime},{sendspan},{recvdate},{recvtime},{recvspan},{num1},{num2}");
             }
 
             sw.Flush();
@@ -1057,9 +1033,14 @@ namespace VICTOR4080
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _sampleTimer?.Stop();
+            _highTimer?.Dispose();
         }
     }
 }

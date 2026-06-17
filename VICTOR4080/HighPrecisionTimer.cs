@@ -5,69 +5,159 @@ using System.Threading.Tasks;
 
 namespace VICTOR4080
 {
-    /// <summary>高精度定时发生器，基于Stopwatch</summary>
+    /// <summary>
+    /// WinForm 高精度定时器，支持运行时动态修改定时周期
+    /// </summary>
     public class HighPrecisionTimer
     {
-        // 定时周期 毫秒
-        private readonly int _intervalMs;
-        private Stopwatch _stopwatch;
+        #region 私有字段
+        private int _intervalMs;
+        private readonly object _lockObj = new object();
         private CancellationTokenSource _cts;
-        private Task _runTask;
+        private Task _timerTask;
+        private readonly Action _tickAction;
 
-        /// <summary>定时触发回调，参数：当前高精度时间戳</summary>
-        public Action<DateTime> OnTick { get; set; }
+        private Stopwatch _stopwatch;
+        private long _nextTick;
+        #endregion
 
-        public HighPrecisionTimer(int intervalMs)
+        #region 公开属性
+        /// <summary>
+        /// 当前定时间隔（毫秒）
+        /// </summary>
+        public int IntervalMs
         {
-            _intervalMs = intervalMs;
+            get
+            {
+                lock (_lockObj)
+                {
+                    return _intervalMs;
+                }
+            }
         }
 
-        /// <summary>启动定时器</summary>
+        /// <summary>
+        /// 定时器是否正在运行
+        /// </summary>
+        public bool IsRunning { get; private set; }
+        #endregion
+
+        #region 构造函数
+        /// <summary>
+        /// 初始化高精度定时器
+        /// </summary>
+        /// <param name="initialIntervalMs">初始定时间隔(ms)</param>
+        /// <param name="tickAction">定时触发回调</param>
+        public HighPrecisionTimer(int initialIntervalMs, Action tickAction)
+        {
+            if (initialIntervalMs <= 0)
+                throw new ArgumentException("定时间隔必须大于0毫秒");
+            _intervalMs = initialIntervalMs;
+            _tickAction = tickAction ?? throw new ArgumentNullException(nameof(tickAction));
+        }
+        #endregion
+
+        #region 动态修改间隔
+        /// <summary>
+        /// 修改定时间隔：下一个周期生效（平滑切换，当前周期继续走完）
+        /// </summary>
+        /// <param name="newIntervalMs">新间隔(ms)</param>
+        public void SetInterval(int newIntervalMs)
+        {
+            if (newIntervalMs <= 0)
+                throw new ArgumentException("定时间隔必须大于0毫秒");
+            lock (_lockObj)
+            {
+                _intervalMs = newIntervalMs;
+            }
+        }
+
+        /// <summary>
+        /// 修改定时间隔：立即生效，从当前时刻重新开始计时
+        /// </summary>
+        /// <param name="newIntervalMs">新间隔(ms)</param>
+        public void SetIntervalImmediate(int newIntervalMs)
+        {
+            SetInterval(newIntervalMs);
+            if (IsRunning)
+            {
+                lock (_lockObj)
+                {
+                    _nextTick = _stopwatch.ElapsedTicks;
+                }
+            }
+        }
+        #endregion
+
+        #region 启停与释放
         public void Start()
         {
-            if (_cts != null && !_cts.IsCancellationRequested)
-                return;
+            if (IsRunning) return;
 
             _cts = new CancellationTokenSource();
-            _stopwatch = Stopwatch.StartNew();
-            long lastElapsedMs = _stopwatch.ElapsedMilliseconds;
+            var token = _cts.Token;
 
-            _runTask = Task.Run(async () =>
+            _timerTask = Task.Run(() =>
             {
-                while (!_cts.Token.IsCancellationRequested)
+                _stopwatch = Stopwatch.StartNew();
+                _nextTick = _stopwatch.ElapsedTicks;
+
+                while (!token.IsCancellationRequested)
                 {
-                    long nowMs = _stopwatch.ElapsedMilliseconds;
-                    // 达到间隔则执行回调
-                    if (nowMs - lastElapsedMs >= _intervalMs)
+                    long currentTickInterval;
+                    lock (_lockObj)
                     {
-                        lastElapsedMs = nowMs;
-                        // 触发回调，把当前真实系统时间传给你
-                        OnTick?.Invoke(DateTime.Now);
+                        currentTickInterval = Stopwatch.Frequency * _intervalMs / 1000;
                     }
-                    // 极小休眠，降低CPU占用
-                    await Task.Delay(1, _cts.Token);
+
+                    // 高精度自旋等待到下一个节拍
+                    while (_stopwatch.ElapsedTicks < _nextTick && !token.IsCancellationRequested)
+                    {
+                        Thread.SpinWait(10);
+                    }
+
+                    if (token.IsCancellationRequested)
+                        break;
+
+                    // 执行定时任务
+                    _tickAction.Invoke();
+
+                    // 更新下一次触发时间
+                    lock (_lockObj)
+                    {
+                        _nextTick += currentTickInterval;
+                    }
                 }
-            }, _cts.Token);
+            }, token);
+
+            IsRunning = true;
         }
 
-        /// <summary>停止定时器并释放资源</summary>
         public void Stop()
         {
+            if (!IsRunning) return;
+
             _cts?.Cancel();
             try
             {
-                _runTask?.Wait(300);
+                _timerTask?.Wait(200);
             }
             catch
             {
-                // 忽略取消异常
+                // 捕获取消异常，无需处理
             }
+
             _cts?.Dispose();
             _cts = null;
-            _stopwatch?.Stop();
+            _timerTask = null;
+            _stopwatch = null;
+            IsRunning = false;
         }
 
-        /// <summary>是否正在运行</summary>
-        public bool IsRunning => _cts != null && !_cts.IsCancellationRequested;
+        public void Dispose()
+        {
+            Stop();
+        }
+        #endregion
     }
 }
