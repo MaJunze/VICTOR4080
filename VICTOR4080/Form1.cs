@@ -25,8 +25,10 @@ namespace VICTOR4080
         private readonly SerialPort _serialPort = new();
         private readonly Queue<string> _rxQueue = new();
 
+        private readonly List<DateTime> _clickTimeStamp = [];
         private readonly List<DateTime> _sendTimeStamp = [];
         private readonly List<DateTime> _recvTimeStamp = [];
+        private readonly List<double> _clickTimeSpan = [];
         private readonly List<double> _sendTimeSpan = [];
         private readonly List<double> _recvTimeSpan = [];
         private readonly List<double> _num1 = [];
@@ -77,7 +79,7 @@ namespace VICTOR4080
 
             _highTimer = new HighPrecisionTimer(100, TimerTickCallback);
 
-            Text = "VICTOR4080" + " - " + "V2026.0618.11.52";
+            Text = "VICTOR4080" + " - " + "V2026.0621.14.20";
         }
 
         private void TimerTickCallback()
@@ -885,8 +887,10 @@ namespace VICTOR4080
 
         private void ClearData()
         {
+            _clickTimeStamp.Clear();
             _sendTimeStamp.Clear();
             _recvTimeStamp.Clear();
+            _clickTimeSpan.Clear();
             _sendTimeSpan.Clear();
             _recvTimeSpan.Clear();
             _num1.Clear();
@@ -965,6 +969,7 @@ namespace VICTOR4080
         private void button8_Click(object sender, EventArgs e)
         {
             int count = _recvTimeStamp.Count;
+            int clickcount = _clickTimeStamp.Count;
 
             if (0 == count)
             {
@@ -990,6 +995,7 @@ namespace VICTOR4080
             sw.WriteLine($"采集开始时间,{_recvTimeStamp[0]:yyyy.MM.dd HH:mm:ss.fff}");
             sw.WriteLine($"采集结束时间,{_recvTimeStamp[count - 1]:yyyy.MM.dd HH:mm:ss.fff}");
             sw.WriteLine($"总记录条数,{count}");
+            sw.WriteLine($"手动标记点数,{clickcount}");
             sw.WriteLine();
             sw.WriteLine($"串口号,{_serialPort.PortName}");
             sw.WriteLine($"波特率,{_serialPort.BaudRate}");
@@ -1000,6 +1006,21 @@ namespace VICTOR4080
             sw.WriteLine($"激励频率,{label5.Text}");
             sw.WriteLine($"激励电平,{label6.Text}");
             sw.WriteLine($"电压偏置,{label7.Text}");
+            sw.WriteLine();
+            if (_clickTimeStamp.Count > 0)
+            {
+                sw.WriteLine("序号,绝对日期,绝对时间,相对时间");
+
+                for (int i = 0; i < clickcount; i++)
+                {
+                    string index = (i + 1).ToString();
+                    string clickdate = _clickTimeStamp[i].ToString("yyyy.MM.dd");
+                    string clicktime = _clickTimeStamp[i].ToString("HH:mm:ss.fff");
+                    string clickspan = _clickTimeSpan[i].ToString("F3");
+
+                    sw.WriteLine($"{index},{clickdate},{clicktime},{clickspan}");
+                }
+            }
             sw.WriteLine();
             sw.WriteLine("序号,发送日期,发送时间,发送相对,接收日期,接收时间,接收相对,第一测量" + lb2Func1 + lb2Func2 + ",第二测量" + lb2Func4);
             for (int i = 0; i < count; i++)
@@ -1031,6 +1052,26 @@ namespace VICTOR4080
             {
                 MessageBox.Show("这次还没存，以前存的我也不知道");
             }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            _clickTimeStamp.Add(now);
+
+            if (_clickTimeStamp.Count == 1)
+            {
+                _clickTimeSpan.Add(0);
+            }
+            else if (_clickTimeStamp.Count > 1)
+            {
+                _clickTimeSpan.Add((now - _clickTimeStamp[0]).TotalSeconds);
+            }
+
+            MessageBox.Show(now.ToString("yyyy.MM.dd") + " " + now.ToString("HH:mm:ss.fff"),
+                "手动标记时间",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void Form1_Load(object sender, EventArgs e)

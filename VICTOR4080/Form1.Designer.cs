@@ -74,9 +74,10 @@
             button7 = new Button();
             panel6 = new Panel();
             panel5 = new Panel();
-            panel7 = new Panel();
             button9 = new Button();
             button8 = new Button();
+            panel7 = new Panel();
+            button10 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -502,10 +503,10 @@
             // button3
             // 
             button3.BackColor = Color.White;
-            button3.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button3.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
             button3.Location = new Point(3, 8);
             button3.Name = "button3";
-            button3.Size = new Size(88, 32);
+            button3.Size = new Size(74, 32);
             button3.TabIndex = 4;
             button3.TabStop = false;
             button3.Text = "清除图表";
@@ -515,10 +516,10 @@
             // button6
             // 
             button6.BackColor = Color.White;
-            button6.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button6.Location = new Point(191, 8);
+            button6.Font = new Font("Microsoft YaHei UI", 10.5F);
+            button6.Location = new Point(167, 8);
             button6.Name = "button6";
-            button6.Size = new Size(88, 32);
+            button6.Size = new Size(74, 32);
             button6.TabIndex = 7;
             button6.TabStop = false;
             button6.Text = "滚动刷新";
@@ -528,10 +529,10 @@
             // button5
             // 
             button5.BackColor = Color.White;
-            button5.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button5.Location = new Point(97, 8);
+            button5.Font = new Font("Microsoft YaHei UI", 10.5F);
+            button5.Location = new Point(85, 8);
             button5.Name = "button5";
-            button5.Size = new Size(88, 32);
+            button5.Size = new Size(74, 32);
             button5.TabIndex = 6;
             button5.TabStop = false;
             button5.Text = "单屏刷新";
@@ -541,10 +542,10 @@
             // button4
             // 
             button4.BackColor = Color.DarkSeaGreen;
-            button4.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button4.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
             button4.Location = new Point(3, 8);
             button4.Name = "button4";
-            button4.Size = new Size(88, 32);
+            button4.Size = new Size(74, 32);
             button4.TabIndex = 5;
             button4.TabStop = false;
             button4.Text = "全部波形";
@@ -559,10 +560,10 @@
             // button7
             // 
             button7.BackColor = Color.White;
-            button7.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button7.Location = new Point(285, 8);
+            button7.Font = new Font("Microsoft YaHei UI", 10.5F);
+            button7.Location = new Point(249, 8);
             button7.Name = "button7";
-            button7.Size = new Size(88, 32);
+            button7.Size = new Size(74, 32);
             button7.TabIndex = 5;
             button7.TabStop = false;
             button7.Text = "暂停刷新";
@@ -573,13 +574,13 @@
             // 
             panel6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             panel6.BorderStyle = BorderStyle.FixedSingle;
-            panel6.Controls.Add(button6);
-            panel6.Controls.Add(button7);
             panel6.Controls.Add(button4);
+            panel6.Controls.Add(button6);
             panel6.Controls.Add(button5);
-            panel6.Location = new Point(115, 500);
+            panel6.Controls.Add(button7);
+            panel6.Location = new Point(100, 500);
             panel6.Name = "panel6";
-            panel6.Size = new Size(380, 49);
+            panel6.Size = new Size(333, 49);
             panel6.TabIndex = 8;
             // 
             // panel5
@@ -589,27 +590,16 @@
             panel5.Controls.Add(button3);
             panel5.Location = new Point(12, 500);
             panel5.Name = "panel5";
-            panel5.Size = new Size(97, 49);
+            panel5.Size = new Size(82, 49);
             panel5.TabIndex = 5;
-            // 
-            // panel7
-            // 
-            panel7.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            panel7.BorderStyle = BorderStyle.FixedSingle;
-            panel7.Controls.Add(button9);
-            panel7.Controls.Add(button8);
-            panel7.Location = new Point(501, 500);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(191, 49);
-            panel7.TabIndex = 9;
             // 
             // button9
             // 
             button9.BackColor = Color.White;
-            button9.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            button9.Location = new Point(97, 8);
+            button9.Font = new Font("Microsoft YaHei UI", 10.5F);
+            button9.Location = new Point(85, 8);
             button9.Name = "button9";
-            button9.Size = new Size(88, 32);
+            button9.Size = new Size(74, 32);
             button9.TabIndex = 7;
             button9.TabStop = false;
             button9.Text = "我存哪了";
@@ -619,15 +609,40 @@
             // button8
             // 
             button8.BackColor = Color.White;
-            button8.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button8.Font = new Font("Microsoft YaHei UI", 10.5F);
             button8.Location = new Point(3, 8);
             button8.Name = "button8";
-            button8.Size = new Size(88, 32);
+            button8.Size = new Size(74, 32);
             button8.TabIndex = 6;
             button8.TabStop = false;
             button8.Text = "导出数据";
             button8.UseVisualStyleBackColor = false;
             button8.Click += button8_Click;
+            // 
+            // panel7
+            // 
+            panel7.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel7.BorderStyle = BorderStyle.FixedSingle;
+            panel7.Controls.Add(button10);
+            panel7.Controls.Add(button8);
+            panel7.Controls.Add(button9);
+            panel7.Location = new Point(439, 500);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(253, 49);
+            panel7.TabIndex = 9;
+            // 
+            // button10
+            // 
+            button10.BackColor = Color.White;
+            button10.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button10.Location = new Point(167, 8);
+            button10.Name = "button10";
+            button10.Size = new Size(74, 32);
+            button10.TabIndex = 4;
+            button10.TabStop = false;
+            button10.Text = "记录时刻";
+            button10.UseVisualStyleBackColor = false;
+            button10.Click += button10_Click;
             // 
             // Form1
             // 
@@ -705,8 +720,9 @@
         private Button button7;
         private Panel panel6;
         private Panel panel5;
-        private Panel panel7;
         private Button button9;
         private Button button8;
+        private Panel panel7;
+        private Button button10;
     }
 }
